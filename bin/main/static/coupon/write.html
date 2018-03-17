@@ -1,0 +1,21 @@
+	<div ng-controller="couponWriteCtrl" class="form-group">
+		<h2>Email 등록</h2>
+		<form name="form" novalidate="novalidate" ng-submit="submitForm(form)" method="post" >
+		
+			<table class="table table-bordered" id="userWriteInfo" ng-show="user.userId == null">
+				<tr>
+					<th>이메일</th>
+					<td><input type="email" ng-model="user.email" maxlength="50" required="required" title="email"/></td>
+				</tr>
+			</table>
+			
+			<div class="row">
+				<div class="text-left col-md-6">
+					<button type="button" class="btn btn-default" ui-sref="couponList">목록</button>
+				</div>
+				<div class="text-right col-md-6">
+					<button type="submit" class="btn btn-success">쿠폰 등록</button>
+				</div>
+			</div>
+		</form>
+	</div>
