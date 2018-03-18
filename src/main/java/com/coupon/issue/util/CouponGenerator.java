@@ -1,7 +1,5 @@
 package com.coupon.issue.util;
 
-import java.time.LocalDate;
-import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,9 +13,8 @@ public class CouponGenerator {
 
   public String getGeneratorCoupon() {
     sb = new StringBuilder();
-    String[] strArray = (LocalDate.now().getYear() + "" + System.nanoTime()).split("");
-    LOG.info("" + System.nanoTime());
-    LOG.info(Arrays.toString(strArray));
+    String[] strArray = getNumbers().split("");
+    //LOG.info(Arrays.toString(strArray));
     for (int i = 0; i < 16; i++) {
       int number = Integer.parseInt(strArray[i]);
       if (i > 0 && i % 4 == 0) {
@@ -40,5 +37,9 @@ public class CouponGenerator {
     }
 
     return sb.toString();
+  }
+
+  private String getNumbers() {
+    return String.format("%d%d", System.nanoTime(), System.currentTimeMillis());
   }
 }

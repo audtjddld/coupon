@@ -25,7 +25,7 @@ public class KakaopayApplicationTests {
 		es.submit(new Runnable() {
 			@Override
 			public void run() {
-				for (int i = 0 ; i < 300; i++) {
+				for (int i = 0 ; i < 100000; i++) {
 					String email = Thread.currentThread().getName() + "abc" + i + "@abc.com";
 					CouponVO couponVO = new CouponVO();
 					couponVO.setEmail(email);
@@ -37,7 +37,7 @@ public class KakaopayApplicationTests {
 			
 			@Override
 			public void run() {
-				for (int i = 0 ; i < 300; i++) {
+				for (int i = 0 ; i < 100000; i++) {
 					String email = Thread.currentThread().getName() + "abcd" + i + "@abc.com";
 					CouponVO couponVO = new CouponVO();
 					couponVO.setEmail(email);
