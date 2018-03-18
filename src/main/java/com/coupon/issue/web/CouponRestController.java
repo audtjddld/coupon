@@ -2,9 +2,7 @@ package com.coupon.issue.web;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,46 +15,57 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.coupon.issue.domain.Coupon;
 import com.coupon.issue.exception.web.CouponException;
 import com.coupon.issue.exception.web.ErrorCode;
 import com.coupon.issue.service.CouponService;
 import com.coupon.issue.service.CouponVO;
 
+/**
+ * Coupone Rest Controller
+ * <pre>
+ * com.coupon.issue.web 
+ *    |_ CouponRestController.java
+ * > API 통신용 Controller 이다.
+ * </pre>
+ * @date : 2018. 3. 18. 오후 10:35:38
+ * @version : 
+ * @author : jms
+ */
 @RestController
 @RequestMapping(value = "/rest/coupons")
 public class CouponRestController {
 
-	public static final Logger LOG = LoggerFactory.getLogger(CouponRestController.class);
-	
-	@Autowired
-	private CouponService couponService;
+  public static final Logger LOG = LoggerFactory.getLogger(CouponRestController.class);
 
-	@PostMapping
-	public ResponseEntity<Void> registerCoupon(@RequestBody @Valid CouponVO couponVO, BindingResult bindingResult) throws CouponException, URISyntaxException {
-		URI uri = null;
-		LOG.info(couponVO.toString());
-		if (bindingResult.hasErrors()) {
-			throw new CouponException(ErrorCode.INVALID_EMAIL);
-		}
-		
-		Coupon coupon = couponService.insertCoupon(couponVO);
-		uri = new URI("/rest/coupons/" + coupon.getId());
-		return ResponseEntity.created(uri).build();
-	}
+  @Autowired
+  private CouponService couponService;
 
-	@GetMapping
-	public Page<Coupon> getList(Pageable pageable) {
-		return couponService.getCouponList(pageable);
-	}
+  @PostMapping
+  public ResponseEntity<Void> registerCoupon(@RequestBody @Valid CouponVO couponVO,
+      BindingResult bindingResult) throws CouponException, URISyntaxException {
+    URI uri = null;
+    LOG.info(couponVO.toString());
+    if (bindingResult.hasErrors()) {
+      throw new CouponException(ErrorCode.INVALID_EMAIL);
+    }
 
-	@GetMapping(value = "testData")
-	public void createTestData() throws URISyntaxException, CouponException {
-		CouponVO couponVO = new CouponVO();
-		for (int i = 2 ; i < 200; i ++) {
-			couponVO.setEmail(String.format("test%d@test.com", i));
-			couponService.insertCoupon(couponVO); 
-		}
-	}
+    Coupon coupon = couponService.insertCoupon(couponVO);
+    uri = new URI("/rest/coupons/" + coupon.getId());
+    return ResponseEntity.created(uri).build();
+  }
+
+  @GetMapping
+  public Page<Coupon> getList(Pageable pageable) {
+    return couponService.getCouponList(pageable);
+  }
+
+  @GetMapping(value = "testData")
+  public void createTestData() throws URISyntaxException, CouponException {
+    CouponVO couponVO = new CouponVO();
+    for (int i = 2; i < 200; i++) {
+      couponVO.setEmail(String.format("test%d@test.com", i));
+      couponService.insertCoupon(couponVO);
+    }
+  }
 }

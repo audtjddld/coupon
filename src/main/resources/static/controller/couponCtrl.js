@@ -69,7 +69,6 @@ myApp
 		
 		// 파라미터
 		var params = angular.copy({email : $scope.email});
-		// 변경한 서비스 사용
 		console.log(params);
 		
 		var scope = this;

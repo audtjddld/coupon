@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.coupon.issue.domain.Coupon;
 import com.coupon.issue.exception.web.CouponException;
 import com.coupon.issue.exception.web.ErrorCode;
@@ -16,45 +15,57 @@ import com.coupon.issue.service.CouponService;
 import com.coupon.issue.service.CouponVO;
 import com.coupon.issue.util.CouponGenerator;
 
+/**
+ * Coupone Service Implement
+ * <pre>
+ * com.coupon.issue.service.impl 
+ *    |_ CouponServiceImpl.java
+ * 
+ * </pre>
+ * @date : 2018. 3. 18. 오후 10:31:14
+ * @version : 
+ * @author : jms
+ */
 @Service
 public class CouponServiceImpl implements CouponService {
 
-	public static final Logger LOG = LoggerFactory.getLogger(CouponServiceImpl.class);
+  public static final Logger LOG = LoggerFactory.getLogger(CouponServiceImpl.class);
 
-	@Autowired
-	private CouponRepository couponRepository;
+  @Autowired
+  private CouponRepository couponRepository;
 
-	@Autowired
-	private CouponGenerator couponGenerator;
+  @Autowired
+  private CouponGenerator couponGenerator;
 
-	@Override
-	@Transactional
-	public Coupon insertCoupon(CouponVO couponVO) throws CouponException {
-		LOG.info(couponVO.toString());
-		// email 검증
-		Coupon existCoupon = couponRepository.findByEmail(couponVO.getEmail());
+  @Override
+  @Transactional
+  public Coupon insertCoupon(CouponVO couponVO) throws CouponException {
+    LOG.info(couponVO.toString());
+    // email 검증
+    Coupon existCoupon = couponRepository.findByEmail(couponVO.getEmail());
 
-		if (existCoupon != null) {
-			throw new CouponException(ErrorCode.DUPLICATE_EMAIL);
-		}
+    if (existCoupon != null) {
+      throw new CouponException(ErrorCode.DUPLICATE_EMAIL);
+    }
 
-		// coupon 발행
-		String issueCoupon = couponGenerator.getGeneratorCoupon();
+    // coupon 발행
+    String issueCoupon = couponGenerator.getGeneratorCoupon();
 
-		existCoupon = couponRepository.findByCoupon(issueCoupon);
+    existCoupon = couponRepository.findByCoupon(issueCoupon);
 
-		if (existCoupon != null) {
-			this.insertCoupon(couponVO);
-		}
+    if (existCoupon != null) {
+      LOG.info("쿠폰 중복 !!!");
+      this.insertCoupon(couponVO);
+    }
 
-		Coupon coupon = new Coupon(couponVO.getEmail(), issueCoupon);
-		couponRepository.save(coupon);
-		return coupon;
-	}
+    Coupon coupon = new Coupon(couponVO.getEmail(), issueCoupon);
+    couponRepository.save(coupon);
+    return coupon;
+  }
 
-	@Override
-	public Page<Coupon> getCouponList(Pageable pageable) {
-		LOG.info(pageable.toString());
-		return couponRepository.findAll(pageable);
-	}
+  @Override
+  public Page<Coupon> getCouponList(Pageable pageable) {
+    LOG.info(pageable.toString());
+    return couponRepository.findAll(pageable);
+  }
 }

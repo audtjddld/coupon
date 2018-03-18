@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class KakaopayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(KakaopayApplication.class, args);
-	}
+    SpringApplication.run(KakaopayApplication.class, args);
+  }
 }
