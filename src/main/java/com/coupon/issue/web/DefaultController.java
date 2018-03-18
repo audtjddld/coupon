@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class DefaultController implements ErrorController {
-
+	
 	@RequestMapping(value = "/error")
 	public String redirectingInitalPage() {
 		return "redirect:/coupon";
@@ -17,4 +17,5 @@ public class DefaultController implements ErrorController {
 		// TODO Auto-generated method stub
 		return "/error";
 	}
+
 }

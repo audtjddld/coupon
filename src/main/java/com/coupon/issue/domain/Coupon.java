@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class Coupon implements Serializable {
 
@@ -28,11 +30,17 @@ public class Coupon implements Serializable {
 
 	@Column(name = "reg_date")
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date regDate;
 
+	public Coupon() {
+		
+	}
+	
 	public Coupon(String email, String issueCoupon) {
 		this.email = email;
 		this.coupon = issueCoupon;
+		this.regDate = new Date();
 	}
 
 	public Long getId() {
