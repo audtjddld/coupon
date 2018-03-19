@@ -32,7 +32,9 @@ h2 (in memory db)
 > 각 문자열로 변경하는 것으로 방향을 잡음.
 
 ```
-for (int i = 0; i < 16; i++) {
+    Random ran = new SecureRandom();
+    int ranNumber = ran.nextInt(16) + 1;
+    for (int i = 0; i < 16; i++) {
       int number = Integer.parseInt(strArray[i]);
       if (i > 0 && i % 4 == 0) {
         sb.append("-");
@@ -40,22 +42,25 @@ for (int i = 0; i < 16; i++) {
       int mod = number % 3;
       switch (mod) {
         case 0:
-          sb.append((char) (97 + number));
+          sb.append((char) (97 + number + ranNumber));
           break;
         case 1:
-          sb.append(number);
+          sb.append((number + ranNumber) % 9);
           break;
         case 2:
-          sb.append((char) (65 + number));
+          sb.append((char) (65 + number + ranNumber));
           break;
         default:
           break;
       }
     }
+
+    return sb.toString();
     
     ------ 결과 ------
-    1CI1-FC1d-ja1d-F7I1
-    -----------------
+    QWox-rWxT-Q3Wo-6W6T
+    -----------------  
+    
 ```
-
->전체적인 문자열 범위를 활용 못하는 것이 아쉬움.
+각 배열에 들어가는 값들은 0-9 사이의 숫자만 들어가게 되는데 알파벳을 전부 사용하기 위해  
+사용될 보수를 랜덤으로 생성하여 추가 시킴.

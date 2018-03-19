@@ -1,9 +1,3 @@
-/*
- * Copyright yysvip.tistory.com.,LTD. All rights reserved.
- * 
- * This software is the confidential and proprietary information of yysvip.tistory.com.,LTD.
- * ("Confidential Information").
- */
 package com.coupon.issue.coupon.api;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

@@ -1,12 +1,11 @@
 /*
- * Copyright yysvip.tistory.com.,LTD. All rights reserved.
- * 
  * This software is the confidential and proprietary information of yysvip.tistory.com.,LTD.
  * ("Confidential Information").
  */
 package com.coupon.issue.coupon;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,10 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.coupon.issue.domain.Coupon;
 import com.coupon.issue.exception.web.CouponException;
-import com.coupon.issue.exception.web.ErrorCode;
 import com.coupon.issue.service.CouponService;
 import com.coupon.issue.service.CouponVO;
-import static org.junit.Assert.*;
 
 /**
  * <pre>
